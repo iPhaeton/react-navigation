@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import { TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 import SceneView from '../SceneView';
 import withCachedChildNavigation from '../../withCachedChildNavigation';
+import findCurrentRouteParams from '../../utils/findCurrentRouteParams'
 
 import type {
   NavigationScreenProp,
@@ -178,10 +179,12 @@ class TabView extends PureComponent<void, Props, void> {
       renderPager = this._renderPager;
     }
 
+    const params = findCurrentRouteParams(this.props.navigation.state);
+
     const props = {
       lazy,
       animationEnabled,
-      swipeEnabled,
+      swipeEnabled: params ? params.swipeEnabled : swipeEnabled,
       renderPager,
       renderHeader,
       renderFooter,
