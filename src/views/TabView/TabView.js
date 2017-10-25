@@ -5,7 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import { TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 import SceneView from '../SceneView';
 import withCachedChildNavigation from '../../withCachedChildNavigation';
-import findCurrentRouteParams from '../../utils/findCurrentRouteParams'
+import {findCurrentRouteParams, findCurrentRoute} from '../../utils/currentRoute'
 
 import type {
   NavigationScreenProp,
@@ -57,7 +57,13 @@ class TabView extends PureComponent<void, Props, void> {
 
   _handlePageChanged = (index: number) => {
     const { navigation } = this.props;
-    navigation.navigate(navigation.state.routes[index].routeName);
+
+    if (index < navigation.state.routes.length) {
+      navigation.navigate(navigation.state.routes[navigation.state.index].routeName);
+    } else {
+      const currentRoute = findCurrentRoute(navigation.state);
+      navigation.navigate(currentRoute);
+    }
   };
 
   _renderScene = ({ route }: any) => {
