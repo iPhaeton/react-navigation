@@ -59,7 +59,7 @@ class TabView extends PureComponent<void, Props, void> {
     const { navigation } = this.props;
 
     if (index < navigation.state.routes.length) {
-      navigation.navigate(navigation.state.routes[navigation.state.index].routeName);
+      navigation.navigate(navigation.state.routes[index].routeName);
     } else {
       const currentRoute = findCurrentRoute(navigation.state);
       navigation.navigate(currentRoute);
